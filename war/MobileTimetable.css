@@ -1,0 +1,63 @@
+/** Add css rules here for your application. */
+/** Example rules used by the template application (remove for your app) */
+
+body
+{
+}
+.Panel
+{
+	background:white;	
+	height:480px;
+	width:320px;
+	margin:0 auto;
+}
+
+.footer
+{
+	background:orange;	
+	height:200px;
+	width:320px;
+}
+
+.SettingPanel
+{
+	background:red;	
+	height:480px;
+	width:320px;
+	margin:0 auto;
+}
+.PanelRow
+{
+	background:#ff6827;	
+	height:50px;
+	width:320px;
+}
+
+.GreyText
+{
+	color:grey;
+}
+
+.datePickerMonthSelector 
+{ 
+	display:none;
+}
+
+td.datePickerWeekdayLabel
+{
+	background: #ff6827;
+	padding: 0px 4px 2px;
+	cursor: default;
+	color: white;
+	font-size: 110%;
+	font-weight: normal;
+}
+td.datePickerWeekendLabel
+{
+	background: #ff6827;
+	padding: 0px 4px 2px;
+	cursor: default;
+	color: white;
+	font-size: 110%;
+	font-weight: normal;
+}

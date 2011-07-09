@@ -54,7 +54,7 @@ public class TimeTable extends VerticalPanel
 		   hp.add(previous);
 		   hp.add(date);
 		   hp.add(next);
-
+		   
 			this.add(hp);
 			this.add(dp);
 	}

@@ -20,6 +20,8 @@ import com.google.gwt.user.client.ui.ClickListener;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
@@ -30,10 +32,26 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
+
 public class MobileTimetable implements EntryPoint {
 	Label updateDetail1 = new Label("mobile timetable v0.1a released!");
 	Label updateDetail2 = new Label("We are taking part in iCreate 2011");
 	Label updateDetail3 = new Label("//team alpha");
+	
+	/**
+	 * The message displayed to the user when the server cannot be reached or
+	 * returns an error.
+	 */
+	private static final String SERVER_ERROR = "An error occurred while "
+			+ "attempting to contact the server. Please check your network "
+			+ "connection and try again.";
+
+	/**
+	 * Create a remote service proxy to talk to the server-side Greeting service.
+	 */
+	private final GreetingServiceAsync greetingService = GWT
+			.create(GreetingService.class);
+
 
 	 Timer t = new Timer() {
 	   	  int counter = 0;
@@ -53,16 +71,135 @@ public class MobileTimetable implements EntryPoint {
 	      }
 	    };
 	    
+	    
+//	    public void onModuleLoad() {
+//			final Button sendButton = new Button("Send");
+//			final Button sendButton2 = new Button("Click me");
+//
+//			final TextBox nameField = new TextBox();
+//			nameField.setText("GWT User");
+//			final Label errorLabel = new Label();
+//
+//			// We can add style names to widgets
+//			sendButton.addStyleName("sendButton");
+//
+//			// Add the nameField and sendButton to the RootPanel
+//			// Use RootPanel.get() to get the entire body element
+//			RootPanel.get("nameFieldContainer").add(nameField);
+//			RootPanel.get("sendButtonContainer").add(sendButton);
+//			RootPanel.get("sendButtonContainer").add(sendButton2);
+//
+//			RootPanel.get("errorLabelContainer").add(errorLabel);
+//
+//			// Focus the cursor on the name field when the app loads
+//			nameField.setFocus(true);
+//			nameField.selectAll();
+//
+//			// Create the popup dialog box
+//			final DialogBox dialogBox = new DialogBox();
+//			dialogBox.setText("Remote Procedure Call");
+//			dialogBox.setAnimationEnabled(true);
+//			final Button closeButton = new Button("Close");
+//			// We can set the id of a widget by accessing its Element
+//			closeButton.getElement().setId("closeButton");
+//			final Label textToServerLabel = new Label();
+//			final HTML serverResponseLabel = new HTML();
+//			VerticalPanel dialogVPanel = new VerticalPanel();
+//			dialogVPanel.addStyleName("dialogVPanel");
+//			dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
+//			dialogVPanel.add(textToServerLabel);
+//			dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
+//			dialogVPanel.add(serverResponseLabel);
+//			dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
+//			dialogVPanel.add(closeButton);
+//			dialogBox.setWidget(dialogVPanel);
+//
+//			// Add a handler to close the DialogBox
+//			closeButton.addClickHandler(new ClickHandler() {
+//				public void onClick(ClickEvent event) {
+//					dialogBox.hide();
+//					sendButton.setEnabled(true);
+//					sendButton.setFocus(true);
+//				}
+//			});
+//
+//			// Create a handler for the sendButton and nameField
+//			class MyHandler implements ClickHandler, KeyUpHandler {
+//				/**
+//				 * Fired when the user clicks on the sendButton.
+//				 */
+//				public void onClick(ClickEvent event) {
+//					sendNameToServer();
+//				}
+//
+//				/**
+//				 * Fired when the user types in the nameField.
+//				 */
+//				public void onKeyUp(KeyUpEvent event) {
+//					if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+//						sendNameToServer();
+//					}
+//				}
+//
+//				/**
+//				 * Send the name from the nameField to the server and wait for a response.
+//				 */
+//				private void sendNameToServer() {
+//					// First, we validate the input.
+//					errorLabel.setText("");
+//					String textToServer = nameField.getText();
+//					if (!FieldVerifier.isValidName(textToServer)) {
+//						errorLabel.setText("Please enter at least four characters");
+//						return;
+//					}
+//
+//					// Then, we send the input to the server.
+//					sendButton.setEnabled(false);
+//					textToServerLabel.setText(textToServer);
+//					serverResponseLabel.setText("");
+//					greetingService.greetServer(textToServer,
+//							new AsyncCallback<String>() 
+//							{
+//								public void onFailure(Throwable caught) {
+//									// Show the RPC error message to the user
+//									dialogBox
+//											.setText("Remote Procedure Call - Failure");
+//									serverResponseLabel
+//											.addStyleName("serverResponseLabelError");
+//									serverResponseLabel.setHTML(SERVER_ERROR);
+//									dialogBox.center();
+//									closeButton.setFocus(true);
+//								}
+//
+//								public void onSuccess(String result) {
+//									dialogBox.setText("Remote Procedure Call");
+//									serverResponseLabel
+//											.removeStyleName("serverResponseLabelError");
+//									serverResponseLabel.setHTML(result);
+//									dialogBox.center();
+//									closeButton.setFocus(true);
+//								}
+//							});
+//				}
+//			}
+//
+//			// Add a handler to send the name to the server
+//			MyHandler handler = new MyHandler();
+//			sendButton.addClickHandler(handler);
+//			nameField.addKeyUpHandler(handler);
+//		}
+
 	public void onModuleLoad() 
 	{
 		showLogin(false);
 	}
-	
+
 	private void showLogin(boolean GoToRight)
 	{
 		   VerticalPanel vp = new VerticalPanel();
 		   vp.setStylePrimaryName("Panel");
 		   
+		   //Image navBar = new Image("img/navBar.png");
 		   FocusPanel row = new FocusPanel();
 		   row.setStylePrimaryName("PanelRow");
 		
@@ -108,9 +245,7 @@ public class MobileTimetable implements EntryPoint {
 //		   theFade.setDuration(3);
 //		   theFade.setLooping(true);
 //		   theFade.play();
-//		  
-//			t.scheduleRepeating(3000);
-//		   
+//		   t.scheduleRepeating(3000);		   
 //		   vp.add(update);
 //		   vp.add(updateDetail1);
 //		   vp.add(updateDetail2);
@@ -130,7 +265,6 @@ public class MobileTimetable implements EntryPoint {
 			   rightSlide.play(); 
 			}
 
-
 	}
 	
 	private void showCalendar(boolean GoToLeft)
@@ -142,8 +276,10 @@ public class MobileTimetable implements EntryPoint {
 		   row.setStylePrimaryName("PanelRow");
 
 		   Image img = new Image("img/backbutton3.png");
-		   img.addClickListener(new ClickListener() {
-			      public void onClick(Widget sender) {
+		   img.addClickListener(new ClickListener() 
+		   {
+			      public void onClick(Widget sender) 
+			      {
 			    	  RootPanel.get().remove(0);
 			    	   showLogin(true);
 			      }
@@ -152,49 +288,59 @@ public class MobileTimetable implements EntryPoint {
 		   row.add(img);
 		   vp.add(row);
 		   final DatePicker dp = new DatePicker();
-		   
+		   TimeTable tt = new TimeTable();
+		   tt.setWidth("320px");
 		   dp.setHeight("160px");
 		   dp.setWidth("320px");
-		   vp.add(dp);
+		   vp.add(tt);
 		   ScrollPanel sp = new ScrollPanel();
+		   sp.setTouchScrollingDisabled(false);
 		   sp.setWidth("320px");
-		   sp.setHeight("200px");
+		   sp.setHeight("120px");
 		   VerticalPanel vp2 = new VerticalPanel();
 		   
 		   ClickListener listener = new ClickListener()
 		   {
 		       public void onClick(Widget sender)
 		       {
-//		          dp.setCurrentMonth(new Date(2011-1900,10,7));
 			      RootPanel.get().remove(0);
 		    	  showEvent(true);
 		       }
 		   };
-		   Button h = new Button("Go to Event", listener);
-		   vp2.add(h);
+		   Event event = new Event();
+		   event.addListener(listener);
+
+		   Button h2 = new Button("Go to Event2", listener);
+		   Button h3= new Button("Go to Event3", listener);
+		   Button h4 = new Button("Go to Event4", listener);
+		   Button h5 = new Button("Go to Event5", listener);
+		   Button h6 = new Button("Go to Event6", listener);
+
+		   vp2.add(event);
+		   vp2.add(h2);
+		   vp2.add(h3);
+		   vp2.add(h4);
+		   vp2.add(h5);
+		   vp2.add(h6);
+
 		   sp.add(vp2);
+		   FocusPanel spacePanel = new FocusPanel();
+		   spacePanel.setHeight("100px");
+		   spacePanel.setWidth("320px");
 		   vp.add(sp);
+		   vp.add(spacePanel);
+
 		   RootPanel.get().add(vp);
 
 		   Fade theFade = new Fade(vp.getElement());
-		   
-		   if(GoToLeft){
-			   SlideLeft theSlide = new SlideLeft(vp.getElement());			   
-			   theSlide.setDuration(0.5);
-			   theSlide.play();
-		   }
-		   else {
-			   SlideRight theSlide = new SlideRight(vp.getElement());			   
-			   theSlide.setDuration(0.5);
-			   theSlide.play();
-		   }
+		   slide(GoToLeft, vp);
 
 	}
 	
 	private void showEvent(boolean GoToLeft)
 	{
 		   VerticalPanel vp = new VerticalPanel();
-		   vp.setStylePrimaryName("Panel");
+		   vp.setStylePrimaryName("EventDetailsPanel");
 		   
 		   FocusPanel row = new FocusPanel();
 		   row.setStylePrimaryName("PanelRow");
@@ -211,8 +357,25 @@ public class MobileTimetable implements EntryPoint {
 		 
 		   row.add(img);
 		   vp.add(row);
-		   Label event = new Label("This is Event Details");
-		   vp.add(event);
+		   HTMLPanel event = new HTMLPanel("This is Event Details");
+		   FocusPanel html = new FocusPanel();
+		   html.setStyleName("DetailPanel");
+		   html.add(event);
+		   
+		   HTMLPanel event2 = new HTMLPanel("This is Event Details");
+		   FocusPanel html2 = new FocusPanel();
+		   html2.setStyleName("DetailPanel");
+		   html2.add(event2);
+		   
+		   Label event3 = new Label("This is Event Details");
+		   FocusPanel html3 = new FocusPanel();
+		   html3.setStyleName("DetailPanel");
+		   html3.add(event3);
+		   
+		   vp.add(html);
+		   vp.add(html2);
+		   vp.add(html3);
+		   
 		   ScrollPanel sp = new ScrollPanel();
 		   sp.setWidth("320px");
 		   sp.setHeight("200px");
@@ -221,17 +384,7 @@ public class MobileTimetable implements EntryPoint {
 		   RootPanel.get().add(vp);
 
 		   Fade theFade = new Fade(vp.getElement());
-		   
-		   if(GoToLeft){
-			   SlideLeft theSlide = new SlideLeft(vp.getElement());		   
-			   theSlide.setDuration(0.5);
-			   theSlide.play();
-		   }
-		   else{
-			   SlideRight theSlide = new SlideRight(vp.getElement());		   
-			   theSlide.setDuration(0.5);
-			   theSlide.play(); 
-		   }
+		   slide(GoToLeft, vp);
 		  
 	}
 	
@@ -262,7 +415,6 @@ public class MobileTimetable implements EntryPoint {
 		   //  Add a Fade effect to the button
 		   Fade theFade = new Fade(vp.getElement());
 		   
-		   
 		   SlideLeft theSlide = new SlideLeft(vp.getElement());
 		   //theSlide.setYValue(-450);
 		  //theSlide.setXValue(-450);
@@ -283,5 +435,19 @@ public class MobileTimetable implements EntryPoint {
 		//TODO: other applications can include, 
 	}
 
-
+	//the slide animation
+	private void slide(boolean GoToLeft, VerticalPanel vp)
+	{
+		if(GoToLeft){
+			   SlideLeft theSlide = new SlideLeft(vp.getElement());		   
+			   theSlide.setDuration(0.5);
+			   theSlide.play();
+		   }
+		   else{
+			   SlideRight theSlide = new SlideRight(vp.getElement());		   
+			   theSlide.setDuration(0.5);
+			   theSlide.play(); 
+		   }
+		
+	}
 }

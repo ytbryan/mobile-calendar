@@ -4,9 +4,29 @@
 body
 {
 }
+
 .Panel
 {
 	background:white;	
+	height:480px;
+	width:320px;
+	margin:0 auto;
+}
+
+.DetailPanel
+{
+	background-color: white;
+	border: 1px solid #999;
+	-moz-border-radius: 9px;
+	-webkit-border-radius: 9px;
+	font-size: 16px;
+	margin: 9px;
+	padding: 12px 14px 10px 14px;
+}
+
+.EventDetailsPanel
+{
+	background:url("img/pinstripes.png");
 	height:480px;
 	width:320px;
 	margin:0 auto;
@@ -28,8 +48,8 @@ body
 }
 .PanelRow
 {
-	background:#ff6827;	
-	height:50px;
+	background:url("img/navBar.png");	
+	height:40px;
 	width:320px;
 }
 

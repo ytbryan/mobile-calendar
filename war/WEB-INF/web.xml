@@ -8,7 +8,7 @@
   <!-- Servlets -->
   <servlet>
     <servlet-name>greetServlet</servlet-name>
-    <servlet-class>nus.icreate.mtimetable.server.GreetingServiceImpl</servlet-class>
+    <servlet-class>nus.icreate.mtimetable.server.WebServiceImpl</servlet-class>
   </servlet>
   
   <servlet-mapping>

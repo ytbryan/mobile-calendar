@@ -19,38 +19,41 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 
 public class TimeTable extends VerticalPanel
 {
-	final Label date2 = new Label();
-	final DatePicker dp = new DatePicker();
+	final Label dateLabel = new Label();
+	final DatePicker datePicker = new DatePicker();
 	HorizontalPanel hp = new HorizontalPanel();
 	
 	
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
-	private final GreetingServiceAsync greetingService = GWT
-			.create(GreetingService.class);
+	private final WebServiceAsync greetingService = GWT
+			.create(WebService.class);
 	
 	public TimeTable()
 	{
-		//turn off the stuffs;
-		 date2.setText(dp.getCurrentMonth().toString());
+		
+		   dateLabel.setStyleName("dateLabel");
+		   String dateValue = DateTimeFormat.getMediumDateFormat().format(new Date());
+		   //dateLabel.setText(DateTimeFormat.getMediumDateFormat().format(dp.getValue()));
+		   dateLabel.setText(dateValue);
 		   ClickListener listener = new ClickListener()
 		   {
 		       public void onClick(Widget sender)
 		       {
 		    	   if(sender.getTitle().matches("next"))
 		    	   {
-		    		   Date currentDate = dp.getCurrentMonth();
+		    		  Date currentDate = datePicker.getCurrentMonth();
 				      currentDate.setMonth(currentDate.getMonth()+1);
-			    	  dp.setCurrentMonth(currentDate);
-			    	  date2.setText(dp.getCurrentMonth().toString());
+			    	  datePicker.setCurrentMonth(currentDate);
+			    	  dateLabel.setText(DateTimeFormat.getMediumDateFormat().format(datePicker.getCurrentMonth()));
 		    	   }
 		    	   else if(sender.getTitle().matches("previous"))
 		    	   {
-		    		  Date currentDate = dp.getCurrentMonth();
+		    		  Date currentDate = datePicker.getCurrentMonth();
 				      currentDate.setMonth(currentDate.getMonth()-1);
-			    	  dp.setCurrentMonth(currentDate);
-			    	  date2.setText(dp.getCurrentMonth().toString());
+			    	  datePicker.setCurrentMonth(currentDate);
+			    	  dateLabel.setText(DateTimeFormat.getMediumDateFormat().format(datePicker.getCurrentMonth()));
 		    	   }
 		    	   else 
 		    	   {
@@ -59,11 +62,11 @@ public class TimeTable extends VerticalPanel
 		       }
 		   };
 		  
-		   dp.addValueChangeHandler(new ValueChangeHandler() {
+		   datePicker.addValueChangeHandler(new ValueChangeHandler() {
 			      public void onValueChange(ValueChangeEvent event) {
 			        Date date = (Date) event.getValue();
 			        String dateString = DateTimeFormat.getMediumDateFormat().format(date);
-			        date2.setText(dateString);
+			        dateLabel.setText(dateString);
 			        sendNameToServer();
 			        //change the content
 
@@ -80,15 +83,15 @@ public class TimeTable extends VerticalPanel
 		   previous.addClickListener(listener);
 		   previous.setTitle("previous");
 		   
-		   hp.add(date2);
+		   hp.add(dateLabel);
 		   hp.add(previous);
 		   hp.add(next);
 		   
 			this.add(hp);
-			this.add(dp);
+			this.add(datePicker);
 	}
 	
-	   private void sendNameToServer() {
+	private void sendNameToServer() {
 			String textToServer = "1231312";
 			hp.add(new Image("img/spinner.gif"));
 			greetingService.greetServer(textToServer,
@@ -96,7 +99,7 @@ public class TimeTable extends VerticalPanel
 					{
 						public void onFailure(Throwable caught) {
 							hp.remove(3);
-							date2.setText("Failed");
+							dateLabel.setText("Failed");
 //							// Show the RPC error message to the user
 //							dialogBox
 //									.setText("Remote Procedure Call - Failure");
@@ -109,7 +112,7 @@ public class TimeTable extends VerticalPanel
 
 						public void onSuccess(String result) {
 							hp.remove(3);
-							date2.setText("Success");
+							dateLabel.setText("Success");
 
 //							dialogBox.setText("Remote Procedure Call");
 //							serverResponseLabel
@@ -124,7 +127,7 @@ public class TimeTable extends VerticalPanel
 	public void setWidth(String width)
 	{
 		hp.setSize(width,"20px");
-		dp.setSize(width, "160px");
+		datePicker.setSize(width, "160px");
 	}
 	  
 	

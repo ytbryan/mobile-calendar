@@ -1,0 +1,2 @@
+serviceClass: nus.icreate.mtimetable.client.WebService
+path: ABD171CA817C01FFDF07DE166B4E3F94.gwt.rpc

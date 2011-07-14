@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import nus.icreate.mtimetable.client.GreetingService;
+import nus.icreate.mtimetable.client.WebService;
 import nus.icreate.mtimetable.shared.FieldVerifier;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -19,8 +19,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
  * The server side implementation of the RPC service.
  */
 @SuppressWarnings("serial")
-public class GreetingServiceImpl extends RemoteServiceServlet implements
-		GreetingService {
+public class WebServiceImpl extends RemoteServiceServlet implements
+		WebService {
 	
 	String apikey = "FH3S42OIEnEyN1tEgHs7m";
  	String authtoken = "D7819B738AC42B63F98B2D7E83E7235338E9873446AC7A611B8B46B13" +
@@ -150,8 +150,6 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 		input = escapeHtml(input);
 		userAgent = escapeHtml(userAgent);
 				
-//		return "Hello, " + input + "!<br><br>I am running " + serverInfo
-//				+ ".<br><br>It looks like you are using:<br>" + userAgent;
 		return "Hello AuthenticationServer" +authentication();
 	}
 	public String authentication() 
@@ -161,10 +159,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
         String answer ="";
 		 try {
 			
-	            //new code
 	            URL yahoo = new URL("https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey=FH3S42OIEnEyN1tEgHs7m&Token=D7819B738AC42B63F98B2D7E83E7235338E9873446AC7A611B8B46B13B22344405028D76E26E11B26CF54A0E8DA9400E79C6D7D0667A2353D0C012E0B0F4728D21DF0DAECB43304B188C3E8803DF5387517BCE0378C54459829D512793A9E345DDBAAD38EF76C86C09B387CA8360255B5F9F50322513EEFFCBC4DA277DDADF13EA3409FED839D7B3BE99605B18775B747B42287B7A522C69A6A0FEC44FE1D754AD7E22C7F37F83D2B24E7346CEDD16396D6127744394C3399A9183D840E1C853278594A06D6F9D7289F40C5450AA7270");
-
-	            //URL yahoo = new URL("https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey="+apikey+"&Token="+authtoken+"\"");
 
 	            URLConnection yc = yahoo.openConnection();
 	            BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
@@ -247,7 +242,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
 	 * Escape an html string. Escaping data received from the client helps to
 	 * prevent cross-site script vulnerabilities.
 	 * 
-	 * @param html the html string to escape
+	 * @param html the html string to escapez
 	 * @return the escaped string
 	 */
 	private String escapeHtml(String html) {

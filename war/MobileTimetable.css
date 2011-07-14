@@ -5,6 +5,11 @@ body
 {
 }
 
+.dateLabel
+{
+	Width:200px;	
+	font-weight:bold;
+}
 /*To make image looks like button*/
 .button
 {

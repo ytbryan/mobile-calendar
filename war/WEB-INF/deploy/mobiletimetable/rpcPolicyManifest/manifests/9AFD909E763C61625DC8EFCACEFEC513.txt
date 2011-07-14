@@ -1,2 +1,0 @@
-serviceClass: nus.icreate.mtimetable.client.GreetingService
-path: 19ECF4C44C5BBE399EB2E70CC0482789.gwt.rpc

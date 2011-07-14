@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.MouseListener;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -103,18 +104,38 @@ public class MobileTimetable implements EntryPoint {
 		   pwTextBox.setHeight("20px");
 		   pwTextBox.setWidth("200px");
 		   vp.add(pwTextBox);
-		  		   
-		   Image login = new Image("img/login.png");
-		   login.addClickListener(new ClickListener() 
-		   {
-			      public void onClick(Widget sender) 
-			      {
-			    	   RootPanel.get().remove(0);
-			    	   showCalendar(true);
-			    	   Window.scrollTo(Window.getScrollLeft(),Window.getScrollTop());
-			      }
-			});
 		 
+		   final Image login = new Image("img/login.png");
+		   login.addMouseListener(new MouseListener() 
+		   {
+				@Override
+				public void onMouseDown(Widget sender, int x, int y) {
+			    	  login.setUrl("img/login_pressed.png");
+					
+				}
+				@Override
+				public void onMouseEnter(Widget sender) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public void onMouseLeave(Widget sender) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public void onMouseMove(Widget sender, int x, int y) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public void onMouseUp(Widget sender, int x, int y) {
+			    	login.setUrl("img/login.png");
+			    	 RootPanel.get().remove(0);
+			    	   showCalendar(true);
+			    	   Window.scrollTo(Window.getScrollLeft(),Window.getScrollTop());				
+				}
+			    });
 		   vp.add(login);
 		   FocusPanel fp2 = new FocusPanel();
 		   fp2.setHeight("20px");
@@ -159,14 +180,35 @@ public class MobileTimetable implements EntryPoint {
 		   FocusPanel row = new FocusPanel();
 		   row.setStylePrimaryName("PanelRow");
 
-		   Image img = new Image("img/backbutton3.png");
-		   img.addClickListener(new ClickListener() 
+		   final Image img = new Image("img/backbutton3.png");
+		   img.addMouseListener(new MouseListener() 
 		   {
-			      public void onClick(Widget sender) 
-			      {
-			    	  RootPanel.get().remove(0);
-			    	   showLogin(true);
-			      }
+				@Override
+				public void onMouseDown(Widget sender, int x, int y) {
+			    	  img.setUrl("img/backbutton_pressed.png");
+					
+				}
+				@Override
+				public void onMouseEnter(Widget sender) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public void onMouseLeave(Widget sender) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public void onMouseMove(Widget sender, int x, int y) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public void onMouseUp(Widget sender, int x, int y) {
+			    	img.setUrl("img/backbutton3.png");
+					RootPanel.get().remove(0);
+			    	showLogin(true);					
+				}
 			    });
 		 
 		   row.add(img);
@@ -229,15 +271,36 @@ public class MobileTimetable implements EntryPoint {
 		   FocusPanel row = new FocusPanel();
 		   row.setStylePrimaryName("PanelRow");
 
-		   Image img = new Image("img/backbutton3.png");
-		   img.addClickListener(new ClickListener() 
+		   final Image img = new Image("img/backbutton3.png");
+		   img.addMouseListener(new MouseListener() 
 		   {
-			      public void onClick(Widget sender) 
-			      {
-			    	  RootPanel.get().remove(0);
-			    	  showCalendar(false); // false to turn left
-			      }
-		   });
+				@Override
+				public void onMouseDown(Widget sender, int x, int y) {
+			    	  img.setUrl("img/backbutton_pressed.png");
+					
+				}
+				@Override
+				public void onMouseEnter(Widget sender) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public void onMouseLeave(Widget sender) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public void onMouseMove(Widget sender, int x, int y) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public void onMouseUp(Widget sender, int x, int y) {
+			    	img.setUrl("img/backbutton3.png");
+					RootPanel.get().remove(0);
+			    	showLogin(true);					
+				}
+			    });
 		 
 		   row.add(img);
 		   vp.add(row);
@@ -298,18 +361,9 @@ public class MobileTimetable implements EntryPoint {
 		   RootPanel.get().add(vp);
 		   //  Add a Fade effect to the button
 		   Fade theFade = new Fade(vp.getElement());
-		   
 		   SlideLeft theSlide = new SlideLeft(vp.getElement());
-		   //theSlide.setYValue(-450);
-		  //theSlide.setXValue(-450);
-
 		   theSlide.setUpEffect();
-//		   theSlide.setDisplayOutsideBounds(false);
-		   
-		   //theSlide.setLooping(true);
-		   //theSlide.resumeBackwards();
 		   theSlide.setDuration(0.5);
-		   // Fade the button
 		   theSlide.play();
 	}
 
@@ -322,7 +376,8 @@ public class MobileTimetable implements EntryPoint {
 	//the slide animation
 	private void slide(boolean GoToLeft, VerticalPanel vp)
 	{
-		if(GoToLeft){
+		if(GoToLeft)
+		{
 			   SlideLeft theSlide = new SlideLeft(vp.getElement());		   
 			   theSlide.setDuration(0.5);
 			   theSlide.play();
@@ -332,7 +387,6 @@ public class MobileTimetable implements EntryPoint {
 			   theSlide.setDuration(0.5);
 			   theSlide.play(); 
 		   }
-		
 	}
 
 //    public void onModuleLoad() {

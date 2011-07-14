@@ -5,6 +5,12 @@ body
 {
 }
 
+/*To make image looks like button*/
+.button
+{
+	background: -webkit-gradient(linear,0% 40%,0% 70%,from(#F9F9F9),to(#E3E3E3));	
+}
+
 .Panel
 {
 	background:white;	

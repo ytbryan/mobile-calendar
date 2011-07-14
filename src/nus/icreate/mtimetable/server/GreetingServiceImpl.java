@@ -49,33 +49,62 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements
         String inputLine = "";
         String answer ="";
 
-		        try {
-		        	
-		            //new code
-		            URL yahoo = new URL("https://ivle.nus.edu.sg/api/Lapi.svc/MyOrganizer_Events?APIKey=FH3S42OIEnEyN1tEgHs7m&AuthToken=D7819B738AC42B63F98B2D7E83E7235338E9873446AC7A611B8B46B13B22344405028D76E26E11B26CF54A0E8DA9400E79C6D7D0667A2353D0C012E0B0F4728D21DF0DAECB43304B188C3E8803DF5387517BCE0378C54459829D512793A9E345DDBAAD38EF76C86C09B387CA8360255B5F9F50322513EEFFCBC4DA277DDADF13EA3409FED839D7B3BE99605B18775B747B42287B7A522C69A6A0FEC44FE1D754AD7E22C7F37F83D2B24E7346CEDD16396D6127744394C3399A9183D840E1C853278594A06D6F9D7289F40C5450AA7270&StartDate=19/06/2011&EndDate=30/07/2011&output=json");
+        try {
+            //new code
+            URL yahoo = new URL("https://ivle.nus.edu.sg/api/Lapi.svc/MyOrganizer_Events?APIKey=FH3S42OIEnEyN1tEgHs7m&AuthToken=D7819B738AC42B63F98B2D7E83E7235338E9873446AC7A611B8B46B13B22344405028D76E26E11B26CF54A0E8DA9400E79C6D7D0667A2353D0C012E0B0F4728D21DF0DAECB43304B188C3E8803DF5387517BCE0378C54459829D512793A9E345DDBAAD38EF76C86C09B387CA8360255B5F9F50322513EEFFCBC4DA277DDADF13EA3409FED839D7B3BE99605B18775B747B42287B7A522C69A6A0FEC44FE1D754AD7E22C7F37F83D2B24E7346CEDD16396D6127744394C3399A9183D840E1C853278594A06D6F9D7289F40C5450AA7270&StartDate=19/06/2011&EndDate=30/07/2011&output=json");
 
-		            URLConnection yc = yahoo.openConnection();
-		            BufferedReader in = new BufferedReader(
-		                                    new InputStreamReader(
-		                                    yc.getInputStream()));
+            URLConnection yc = yahoo.openConnection();
+            BufferedReader in = new BufferedReader(
+                                    new InputStreamReader(
+                                    yc.getInputStream()));
 
-		            while ((inputLine = in.readLine()) != null) {
-		            	answer +=inputLine;
-		                System.out.println(inputLine);
-		            }
+            while ((inputLine = in.readLine()) != null) {
+            	answer +=inputLine;
+                System.out.println(inputLine);
+            }
 
-		            in.close();
-		            
-		            
-		        } catch (MalformedURLException e) {
-		            e.printStackTrace();
-		        } catch (IOException e) {
-		            e.printStackTrace();
-		        }
+            in.close();
+            
+            
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		        return answer;
+        return answer;
 	}
 
+	public String authentication()
+	{
+		String inputLine = "";
+        String answer ="";
+		 try {
+	            //new code
+	            URL yahoo = new URL("https://ivle.nus.edu.sg/api/Lapi.svc/MyOrganizer_Events?APIKey=FH3S42OIEnEyN1tEgHs7m&AuthToken=D7819B738AC42B63F98B2D7E83E7235338E9873446AC7A611B8B46B13B22344405028D76E26E11B26CF54A0E8DA9400E79C6D7D0667A2353D0C012E0B0F4728D21DF0DAECB43304B188C3E8803DF5387517BCE0378C54459829D512793A9E345DDBAAD38EF76C86C09B387CA8360255B5F9F50322513EEFFCBC4DA277DDADF13EA3409FED839D7B3BE99605B18775B747B42287B7A522C69A6A0FEC44FE1D754AD7E22C7F37F83D2B24E7346CEDD16396D6127744394C3399A9183D840E1C853278594A06D6F9D7289F40C5450AA7270&StartDate=19/06/2011&EndDate=30/07/2011&output=json");
+
+	            URLConnection yc = yahoo.openConnection();
+	            BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+	            while ((inputLine = in.readLine()) != null) 
+	            {
+	            	answer +=inputLine;
+	                System.out.println(inputLine);
+	            }
+	            in.close();
+	            
+	        } 
+		 	catch (MalformedURLException e) 
+	        {
+	            e.printStackTrace();
+	        } 
+	        catch (IOException e) 
+	        {
+	            e.printStackTrace();
+	        }
+		return "";
+	}
+
+	
 	/**
 	 * Escape an html string. Escaping data received from the client helps to
 	 * prevent cross-site script vulnerabilities.

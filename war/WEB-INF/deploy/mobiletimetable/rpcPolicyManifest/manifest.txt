@@ -1,2 +1,3 @@
 # Module mobiletimetable
 # RPC service class, partial path of RPC policy file
+nus.icreate.mtimetable.client.WebService, ABD171CA817C01FFDF07DE166B4E3F94.gwt.rpc

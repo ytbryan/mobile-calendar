@@ -3,6 +3,10 @@ package nus.icreate.mtimetable.client;
 import java.util.Date;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.TouchEndEvent;
+import com.google.gwt.event.dom.client.TouchEndHandler;
+import com.google.gwt.event.dom.client.TouchStartEvent;
+import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -22,113 +26,133 @@ public class TimeTable extends VerticalPanel
 	final Label dateLabel = new Label();
 	final DatePicker datePicker = new DatePicker();
 	HorizontalPanel hp = new HorizontalPanel();
-	
-	
+
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
 	private final WebServiceAsync greetingService = GWT
-			.create(WebService.class);
-	
+	.create(WebService.class);
+
 	public TimeTable()
 	{
-		
-		   dateLabel.setStyleName("dateLabel");
-		   String dateValue = DateTimeFormat.getMediumDateFormat().format(new Date());
-		   //dateLabel.setText(DateTimeFormat.getMediumDateFormat().format(dp.getValue()));
-		   dateLabel.setText(dateValue);
-		   ClickListener listener = new ClickListener()
-		   {
-		       public void onClick(Widget sender)
-		       {
-		    	   if(sender.getTitle().matches("next"))
-		    	   {
-		    		  Date currentDate = datePicker.getCurrentMonth();
-				      currentDate.setMonth(currentDate.getMonth()+1);
-			    	  datePicker.setCurrentMonth(currentDate);
-			    	  dateLabel.setText(DateTimeFormat.getMediumDateFormat().format(datePicker.getCurrentMonth()));
-		    	   }
-		    	   else if(sender.getTitle().matches("previous"))
-		    	   {
-		    		  Date currentDate = datePicker.getCurrentMonth();
-				      currentDate.setMonth(currentDate.getMonth()-1);
-			    	  datePicker.setCurrentMonth(currentDate);
-			    	  dateLabel.setText(DateTimeFormat.getMediumDateFormat().format(datePicker.getCurrentMonth()));
-		    	   }
-		    	   else 
-		    	   {
-		    		   //do nothing
-		    	   }
-		       }
-		   };
-		  
-		   datePicker.addValueChangeHandler(new ValueChangeHandler() {
-			      public void onValueChange(ValueChangeEvent event) {
-			        Date date = (Date) event.getValue();
-			        String dateString = DateTimeFormat.getMediumDateFormat().format(date);
-			        dateLabel.setText(dateString);
-			        sendNameToServer();
-			        //change the content
+		dateLabel.setStyleName("dateLabel");
+		String dateValue = DateTimeFormat.getMediumDateFormat().format(new Date());
+		dateLabel.setText(dateValue);
+		ClickListener listener = new ClickListener()
+		{
+			public void onClick(Widget sender)
+			{
+				if(sender.getTitle().matches("next"))
+				{
+					Date currentDate = datePicker.getCurrentMonth();
+					currentDate.setMonth(currentDate.getMonth()+1);
+					datePicker.setCurrentMonth(currentDate);
+					dateLabel.setText(DateTimeFormat.getMediumDateFormat().format(datePicker.getCurrentMonth()));
+				}
+				else if(sender.getTitle().matches("previous"))
+				{
+					Date currentDate = datePicker.getCurrentMonth();
+					currentDate.setMonth(currentDate.getMonth()-1);
+					datePicker.setCurrentMonth(currentDate);
+					dateLabel.setText(DateTimeFormat.getMediumDateFormat().format(datePicker.getCurrentMonth()));
+				}
+				else 
+				{
+					//do nothing
+				}
+			}
+		};
 
-			      }
-			    });
-		   
-		   Image next = new Image("img/next.png");
-		   next.setStyleName("button");
-		   next.addClickListener(listener);
-		   next.setTitle("next");
-		   
-		   Image previous = new Image("img/previous.png");
-		   previous.setStyleName("button");
-		   previous.addClickListener(listener);
-		   previous.setTitle("previous");
-		   
-		   hp.add(dateLabel);
-		   hp.add(previous);
-		   hp.add(next);
-		   
-			this.add(hp);
-			this.add(datePicker);
+		datePicker.addValueChangeHandler(new ValueChangeHandler() 
+		{
+			public void onValueChange(ValueChangeEvent event) {
+				Date date = (Date) event.getValue();
+				String dateString = DateTimeFormat.getMediumDateFormat().format(date);
+				dateLabel.setText(dateString);
+				sendNameToServer();
+				//change the content
+
+			}
+		});
+
+		final Image next = new Image("img/next.png");
+		next.setStyleName("button");
+		next.addClickListener(listener);
+		next.addTouchStartHandler(new TouchStartHandler()
+		{
+			@Override
+			public void onTouchStart(TouchStartEvent event) 
+			{
+				next.setStyleName("button_pressed");
+			}			   
+		});
+
+		next.addTouchEndHandler(new TouchEndHandler()
+		{
+			@Override
+			public void onTouchEnd(TouchEndEvent event) 
+			{
+				next.setStyleName("button");
+			}				   
+		});
+		next.setTitle("next");
+
+		final Image previous = new Image("img/previous.png");
+		previous.setStyleName("button");
+		previous.addClickListener(listener);
+		previous.setTitle("previous");
+
+		previous.addTouchStartHandler(new TouchStartHandler()
+		{
+			@Override
+			public void onTouchStart(TouchStartEvent event) 
+			{
+				previous.setStyleName("button_pressed");
+			}			   
+		});
+
+		previous.addTouchEndHandler(new TouchEndHandler()
+		{
+			@Override
+			public void onTouchEnd(TouchEndEvent event) 
+			{
+				previous.setStyleName("button");
+			}				   
+		});
+
+		hp.add(dateLabel);
+		hp.add(previous);
+		hp.add(next);
+
+		this.add(hp);
+		this.add(datePicker);
 	}
-	
-	private void sendNameToServer() {
-			String textToServer = "1231312";
-			hp.add(new Image("img/spinner.gif"));
-			greetingService.greetServer(textToServer,
-					new AsyncCallback<String>() 
-					{
-						public void onFailure(Throwable caught) {
-							hp.remove(3);
-							dateLabel.setText("Failed");
-//							// Show the RPC error message to the user
-//							dialogBox
-//									.setText("Remote Procedure Call - Failure");
-//							serverResponseLabel
-//									.addStyleName("serverResponseLabelError");
-//							serverResponseLabel.setHTML(SERVER_ERROR);
-//							dialogBox.center();
-//							closeButton.setFocus(true);
-						}
 
-						public void onSuccess(String result) {
-							hp.remove(3);
-							dateLabel.setText("Success");
+	private void sendNameToServer() 
+	{
+		String textToServer = "1231312";
+		hp.add(new Image("img/spinner.gif"));
+		greetingService.greetServer(textToServer,
+				new AsyncCallback<String>() 
+				{
+			public void onFailure(Throwable caught) 
+			{
+				hp.remove(3);
+				dateLabel.setText("Failed");
+			}
 
-//							dialogBox.setText("Remote Procedure Call");
-//							serverResponseLabel
-//									.removeStyleName("serverResponseLabelError");
-//							serverResponseLabel.setHTML(result);
-//							dialogBox.center();
-//							closeButton.setFocus(true);
-						}
-					});
-		}
-	
+			public void onSuccess(String result) 
+			{
+				hp.remove(3);
+				dateLabel.setText("Success");
+			}
+				});
+	}
+
 	public void setWidth(String width)
 	{
 		hp.setSize(width,"20px");
 		datePicker.setSize(width, "160px");
 	}
-	  
-	
+
 }

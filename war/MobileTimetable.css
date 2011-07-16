@@ -7,13 +7,26 @@ body
 
 .dateLabel
 {
+	font-family: Helvetica, sans-serif;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 0px 0px 0px 10px;
+	color: #4C566C;
 	width:200px;
-	font-weight:bold;
 }
 /*To make image looks like button*/
 .button
 {
 	background: -webkit-gradient(linear,0% 40%,0% 70%,from(#F9F9F9),to(#E3E3E3));	
+	width: 40px;
+	height: 30px;
+}
+
+.button_pressed
+{
+	background: -webkit-gradient(linear,0% 40%,0% 70%,from(#C4C2C2),to(#E3E3E3));	
+	width: 40px;
+	height: 30px;
 }
 
 .Panel
@@ -66,7 +79,16 @@ body
 
 .GreyText
 {
-	color:grey;
+	font-family: Helvetica, sans-serif;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 0px 0px 0px 10px;
+	color: #4C566C;
+}
+
+.TextBox
+{
+	margin: 0px auto;
 }
 
 .datePickerMonthSelector 

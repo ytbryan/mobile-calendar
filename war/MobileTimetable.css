@@ -14,6 +14,14 @@ body
 	color: #4C566C;
 	width:200px;
 }
+.Grey
+{
+	background:#EDEBEB;
+}
+.DarkGrey
+{
+	background:#D1CDCE;
+}
 
 /*To make image looks like button*/
 .button
@@ -37,6 +45,10 @@ body
 	height:480px;
 	width:320px;
 	margin:0 auto;
+}
+.NewPanel
+{
+	background:#FFF6E0;
 }
 .EachPanelEnd
 {

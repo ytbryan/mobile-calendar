@@ -228,20 +228,22 @@ public class MobileTimetable implements EntryPoint
 		img.addMouseListener(new MouseListener() 
 		{
 			@Override
-			public void onMouseDown(Widget sender, int x, int y) {
+			public void onMouseDown(Widget sender, int x, int y) 
+			{
 				img.setUrl("img/backbutton_pressed.png");
-
 			}
 		
 			@Override
-			public void onMouseUp(Widget sender, int x, int y) {
+			public void onMouseUp(Widget sender, int x, int y) 
+			{
 				img.setUrl("img/backbutton3.png");
 				RootPanel.get().remove(0);
 				showLogin(true);					
 			}
 			
 			@Override
-			public void onMouseEnter(Widget sender) {
+			public void onMouseEnter(Widget sender) 
+			{
 				// TODO Auto-generated method stub
 			}
 			@Override
@@ -288,28 +290,28 @@ public class MobileTimetable implements EntryPoint
 		eachPanelEnd2.setSize("320px", "5px");
 		eachPanelEnd2.setStyleName("EachPanelEnd");
 		
-		Event event = new Event();
+		Event event = new Event(true);
 		event.addListener(listener);
 		event.setContent("Tutorial", "IT1002,3-4pm,LT4");
-		Event event2 = new Event();
+		Event event2 = new Event(false);
 		event2.addListener(listener);
 		event2.setContent("Lecture", "IT1002,3-4pm,LT4");
 
-		Event event3 = new Event();
+		Event event3 = new Event(true);
 		event3.addListener(listener);
 		event3.setContent("Labs", "MA5001,4-6pm,SA102-212");
 
-		Event event4 = new Event();
+		Event event4 = new Event(false);
 		event4.addListener(listener);
 		event3.setContent("Labs", "MA5001,4-6pm,SA102-212");
 
 		
-		Event event5 = new Event();
+		Event event5 = new Event(true);
 		event5.addListener(listener);
 		event3.setContent("Labs", "MA5001,4-6pm,SA102-212");
 
 		
-		Event event6 = new Event();
+		Event event6 = new Event(false);
 		event6.addListener(listener);
 		event3.setContent("Labs", "MA5001,4-6pm,SA102-212");
 
@@ -329,8 +331,8 @@ public class MobileTimetable implements EntryPoint
 		
 		final Image next = new Image("img/next.png");
 		next.setStyleName("button");
-		next.addClickListener(new ClickListener() {
-			
+		next.addClickListener(new ClickListener() 
+		{
 			@Override
 			public void onClick(Widget sender) 
 			{
@@ -356,7 +358,13 @@ public class MobileTimetable implements EntryPoint
 			}				   
 		});
 		
-		vp.add(next);
+		HorizontalPanel row2 = new HorizontalPanel();
+		row2.setStyleName("NewPanel");
+		HTMLPanel p = new HTMLPanel("");
+		p.setSize("275px", "2px");
+		row2.add(p);
+		row2.add(next);
+		vp.add(row2);
 		vp.add(sp);
 		vp.add(spacePanel);
 
@@ -383,8 +391,6 @@ public class MobileTimetable implements EntryPoint
 			{
 				img.setUrl("img/backbutton_pressed.png");
 			}
-
-
 		});
 
 		img.addTouchEndHandler(new TouchEndHandler()
@@ -400,9 +406,9 @@ public class MobileTimetable implements EntryPoint
 		img.addMouseListener(new MouseListener() 
 		{
 			@Override
-			public void onMouseDown(Widget sender, int x, int y) {
+			public void onMouseDown(Widget sender, int x, int y) 
+			{
 				img.setUrl("img/backbutton_pressed.png");
-
 			}
 			
 			@Override

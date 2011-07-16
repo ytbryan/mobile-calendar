@@ -7,7 +7,6 @@ import com.google.gwt.user.client.ui.Label;
 
 public class Event extends HorizontalPanel
 {
-
 	Button button = new Button("Lecture");
 	Label label = new Label("MA1101, 11- 12, LT18");//subject, time, location
 

@@ -14,9 +14,11 @@ body
 	color: #4C566C;
 	width:200px;
 }
+
 /*To make image looks like button*/
 .button
 {
+	border:solid 1px;
 	background: -webkit-gradient(linear,0% 40%,0% 70%,from(#F9F9F9),to(#E3E3E3));	
 	width: 40px;
 	height: 30px;
@@ -35,6 +37,10 @@ body
 	height:480px;
 	width:320px;
 	margin:0 auto;
+}
+.EachPanelEnd
+{
+	background:#FCBD6A;
 }
 
 .DetailPanel

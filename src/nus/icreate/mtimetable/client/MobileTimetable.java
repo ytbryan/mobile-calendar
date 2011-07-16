@@ -169,7 +169,12 @@ public class MobileTimetable implements EntryPoint
 				
 			}
 		});
-		vp.add(login);
+		HorizontalPanel box = new HorizontalPanel();
+		box.add(login);
+		Image spinner = new Image("img/spinner.png");
+		box.add(spinner);
+		
+		vp.add(box);
 		FocusPanel fp2 = new FocusPanel();
 		fp2.setHeight("20px");
 		vp.add(fp2);
@@ -181,6 +186,7 @@ public class MobileTimetable implements EntryPoint
 		FocusPanel fp = new FocusPanel();
 		fp.setHeight("170px");
 		vp.add(fp);
+		
 		RootPanel.get().add(vp);
 
 		if(GoToRight) 
@@ -190,7 +196,6 @@ public class MobileTimetable implements EntryPoint
 			rightSlide.setDuration(0.5);
 			rightSlide.play(); 
 		}
-
 	}
 
 	private void showCalendar(boolean GoToLeft)
@@ -238,7 +243,6 @@ public class MobileTimetable implements EntryPoint
 			@Override
 			public void onMouseEnter(Widget sender) {
 				// TODO Auto-generated method stub
-
 			}
 			@Override
 			public void onMouseLeave(Widget sender) 
@@ -276,6 +280,14 @@ public class MobileTimetable implements EntryPoint
 				//showTeamLogin(true);
 			}
 		};
+		HTMLPanel eachPanelEnd = new HTMLPanel("");
+		eachPanelEnd.setSize("320px", "5px");
+		eachPanelEnd.setStyleName("EachPanelEnd");
+		
+		HTMLPanel eachPanelEnd2 = new HTMLPanel("");
+		eachPanelEnd2.setSize("320px", "5px");
+		eachPanelEnd2.setStyleName("EachPanelEnd");
+		
 		Event event = new Event();
 		event.addListener(listener);
 		event.setContent("Tutorial", "IT1002,3-4pm,LT4");
@@ -301,18 +313,50 @@ public class MobileTimetable implements EntryPoint
 		event6.addListener(listener);
 		event3.setContent("Labs", "MA5001,4-6pm,SA102-212");
 
-
+		vp2.add(eachPanelEnd);
 		vp2.add(event);
 		vp2.add(event2);
 		vp2.add(event3);
 		vp2.add(event4);
 		vp2.add(event5);
 		vp2.add(event6);
+		vp2.add(eachPanelEnd2);
 		
 		sp.add(vp2);
 		FocusPanel spacePanel = new FocusPanel();
 		spacePanel.setHeight("100px");
 		spacePanel.setWidth("320px");
+		
+		final Image next = new Image("img/next.png");
+		next.setStyleName("button");
+		next.addClickListener(new ClickListener() {
+			
+			@Override
+			public void onClick(Widget sender) 
+			{
+				RootPanel.get().remove(0);
+				showTeamLogin(true);
+			}
+		});
+		next.addTouchStartHandler(new TouchStartHandler()
+		{
+			@Override
+			public void onTouchStart(TouchStartEvent event) 
+			{
+				next.setStyleName("button_pressed");
+			}			   
+		});
+
+		next.addTouchEndHandler(new TouchEndHandler()
+		{
+			@Override
+			public void onTouchEnd(TouchEndEvent event) 
+			{
+				next.setStyleName("button");
+			}				   
+		});
+		
+		vp.add(next);
 		vp.add(sp);
 		vp.add(spacePanel);
 

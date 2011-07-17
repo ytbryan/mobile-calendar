@@ -11,8 +11,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import nus.icreate.mtimetable.client.Result;
 import nus.icreate.mtimetable.client.WebService;
 import nus.icreate.mtimetable.shared.FieldVerifier;
+
+//import com.google.gson.Gson;
+//import com.google.gson.JsonArray;
+//import com.google.gson.JsonParser;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 /**
@@ -23,13 +28,14 @@ public class WebServiceImpl extends RemoteServiceServlet implements
 		WebService {
 	
 	String apikey = "FH3S42OIEnEyN1tEgHs7m";
- 	String authtoken = "D7819B738AC42B63F98B2D7E83E7235338E9873446AC7A611B8B46B13" +
- 			"B22344405028D76E26E11B26CF54A0E8DA9400E79C6D7D0667A2353D0C012E0B0F4728" +
- 			"D21DF0DAECB43304B188C3E8803DF5387517BCE0378C54459829D512793A9E34" +
- 			"5DDBAAD38EF76C86C09B387CA8360255B5F9F50322513EEFFCBC4DA277DDADF1" +
- 			"3EA3409FED839D7B3BE99605B18775B747B42287B7A522C69A6A0FEC44FE1D75" +
- 			"4AD7E22C7F37F83D2B24E7346CEDD16396D6" +
- 			"127744394C3399A9183D840E1C853278594A06D6F9D7289F40C5450AA7270";
+// 	String authtoken = "D7819B738AC42B63F98B2D7E83E7235338E9873446AC7A611B8B46B13" +
+// 			"B22344405028D76E26E11B26CF54A0E8DA9400E79C6D7D0667A2353D0C012E0B0F4728" +
+// 			"D21DF0DAECB43304B188C3E8803DF5387517BCE0378C54459829D512793A9E34" +
+// 			"5DDBAAD38EF76C86C09B387CA8360255B5F9F50322513EEFFCBC4DA277DDADF1" +
+// 			"3EA3409FED839D7B3BE99605B18775B747B42287B7A522C69A6A0FEC44FE1D75" +
+// 			"4AD7E22C7F37F83D2B24E7346CEDD16396D6" +
+// 			"127744394C3399A9183D840E1C853278594A06D6F9D7289F40C5450AA7270";
+	String authtoken ="";
 
 	public String getMyOrganizerEventServer(String input) throws IllegalArgumentException {
 		// Verify that the input is valid. 
@@ -135,6 +141,17 @@ public class WebServiceImpl extends RemoteServiceServlet implements
 	}
 
 	public String authenticationServer(String input) throws IllegalArgumentException {
+		
+		//process the input
+		//http://127.0.0.1:8888/
+		//MobileTimetable.html?gwt.codesvr=127.0.0.1:9997&token=A855F2D8591C5FB6265B98842496
+		//1E9427FA72B30B0893E144FFC23036BF55D1BA7F802648A4928D9AF3DAB201A918FC62E508DAF943BE682A1
+		//21324DF7E1115459F8CCCE8A0916DD4C1B6B2A4C4F1AFC4538D46C9B608CF2659BE1C5F35B03
+		//7C58AE6CA4F57C878D06DE7322FAE47FDDF1C26053F25CDE9DFE5D6EF5823C8E0AAE184DB018E684A237
+		//FBE37A9B3E67AFDB68C9D7E6C63FEB662FCB7D9EDD9E597ACFDC7821E98583
+		//B731687B02E1C3AA051F97660A5C85A29646B8F5EB783EB3027CDB732C9888655572A453A568B15
+		authtoken = input.substring((input.length()-416),input.length());
+		
 		// Verify that the input is valid. 
 		if (!FieldVerifier.isValidName(input)) {
 			// If the input is not valid, throw an IllegalArgumentException back to
@@ -154,7 +171,7 @@ public class WebServiceImpl extends RemoteServiceServlet implements
         String answer ="";
 		 try {
 			
-	            URL yahoo = new URL("https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey=FH3S42OIEnEyN1tEgHs7m&Token=D7819B738AC42B63F98B2D7E83E7235338E9873446AC7A611B8B46B13B22344405028D76E26E11B26CF54A0E8DA9400E79C6D7D0667A2353D0C012E0B0F4728D21DF0DAECB43304B188C3E8803DF5387517BCE0378C54459829D512793A9E345DDBAAD38EF76C86C09B387CA8360255B5F9F50322513EEFFCBC4DA277DDADF13EA3409FED839D7B3BE99605B18775B747B42287B7A522C69A6A0FEC44FE1D754AD7E22C7F37F83D2B24E7346CEDD16396D6127744394C3399A9183D840E1C853278594A06D6F9D7289F40C5450AA7270");
+	            URL yahoo = new URL("https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey=FH3S42OIEnEyN1tEgHs7m&Token=" + authtoken +"&output=json");
 
 	            URLConnection yc = yahoo.openConnection();
 	            BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
@@ -176,8 +193,12 @@ public class WebServiceImpl extends RemoteServiceServlet implements
 	            e.printStackTrace();
 	            return null;
 	        }
-				
-		return "Hello AuthenticationServer" + answer;
+//	        Gson gson = new Gson();
+//	        JsonParser parser = new JsonParser();
+//	        Result array = gson.fromJson(answer,Result.class);
+//	        
+	      
+		return answer;
 	}
 //	public String authentication() 
 //	{

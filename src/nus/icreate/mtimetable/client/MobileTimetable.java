@@ -18,6 +18,10 @@ import com.google.gwt.event.dom.client.TouchEndEvent;
 import com.google.gwt.event.dom.client.TouchEndHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -109,7 +113,6 @@ public class MobileTimetable implements EntryPoint
 		idTextBox.setHeight("20px");
 		idTextBox.setWidth("280px");
 		idTextBox.setStyleName("TextBox");
-		idTextBox.setText("U0904804");
 		vp.add(idTextBox);
 		Label password = new Label("Password:");
 		password.setStyleName("GreyText");
@@ -118,7 +121,6 @@ public class MobileTimetable implements EntryPoint
 		pwTextBox.setHeight("20px");
 		pwTextBox.setWidth("280px");
 		pwTextBox.setStyleName("TextBox");
-		pwTextBox.setText("hahahahaha");
 
 
 		vp.add(pwTextBox);
@@ -148,9 +150,10 @@ public class MobileTimetable implements EntryPoint
 			@Override
 			public void onMouseDown(Widget sender, int x, int y) 
 			{
+				
 				login.setUrl("img/login_pressed.png");
 				box.add(spinner);
-				greetingService.authenticationServer("123456",
+				greetingService.authenticationServer(Window.Location.getHref(),
 				new AsyncCallback<String>() 
 				{
 					public void onFailure(Throwable caught) 
@@ -160,7 +163,8 @@ public class MobileTimetable implements EntryPoint
 
 					public void onSuccess(String result) 
 					{
-						if(result==null)
+						getResult(result);
+						if(1==1)
 						{
 							box.remove(1);
 							box.add(new Label("Try Again"));
@@ -171,6 +175,8 @@ public class MobileTimetable implements EntryPoint
 							showCalendar(true);
 						}
 					}
+
+					
 				});
 			}
 
@@ -225,6 +231,14 @@ public class MobileTimetable implements EntryPoint
 		}
 	}
 
+	private void getResult(String result) {
+		
+        JSONValue jsonValue = JSONParser.parse(result);
+        JSONArray jsonArray = jsonValue.isArray();
+        
+        Window.alert(jsonArray.get(1).toString());
+		
+	}
 	private void showCalendar(boolean GoToLeft)
 	{
 		VerticalPanel vp = new VerticalPanel();

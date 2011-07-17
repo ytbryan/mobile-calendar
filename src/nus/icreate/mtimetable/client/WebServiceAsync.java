@@ -7,6 +7,10 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface WebServiceAsync 
 {
-	void greetServer(String input, AsyncCallback<String> callback)
-			throws IllegalArgumentException;
+	void getMyOrganizerEventServer(String input, AsyncCallback<String> callback)
+	throws IllegalArgumentException;
+	void getTimeTableStudentServer(String input, AsyncCallback<String> callback)
+	throws IllegalArgumentException;
+	void authenticationServer(String input, AsyncCallback<String> callback)
+	throws IllegalArgumentException;
 }

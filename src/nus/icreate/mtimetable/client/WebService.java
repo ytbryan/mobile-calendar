@@ -9,5 +9,8 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("greet")
 public interface WebService extends RemoteService 
 {
-	String greetServer(String name) throws IllegalArgumentException;
+	String getMyOrganizerEventServer(String name) throws IllegalArgumentException;
+	String getTimeTableStudentServer(String name) throws IllegalArgumentException;
+	String authenticationServer(String name) throws IllegalArgumentException;
+
 }

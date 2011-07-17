@@ -35,9 +35,9 @@ public class TimeTable extends VerticalPanel
 
 	public TimeTable()
 	{
-		dateLabel.setStyleName("dateLabel");
+		dateLabel.setStyleName("DateLabel");
 		String dateValue = DateTimeFormat.getMediumDateFormat().format(new Date());
-		dateLabel.setText(dateValue);
+		dateLabel.setText("Today is " + dateValue );
 		ClickListener listener = new ClickListener()
 		{
 			public void onClick(Widget sender)
@@ -54,7 +54,7 @@ public class TimeTable extends VerticalPanel
 					Date currentDate = datePicker.getCurrentMonth();
 					currentDate.setMonth(currentDate.getMonth()-1);
 					datePicker.setCurrentMonth(currentDate);
-					dateLabel.setText(DateTimeFormat.getMediumDateFormat().format(datePicker.getCurrentMonth()));
+					dateLabel.setText( DateTimeFormat.getMediumDateFormat().format(datePicker.getCurrentMonth()));
 				}
 				else 
 				{
@@ -65,12 +65,33 @@ public class TimeTable extends VerticalPanel
 
 		datePicker.addValueChangeHandler(new ValueChangeHandler() 
 		{
-			public void onValueChange(ValueChangeEvent event) {
+			public void onValueChange(ValueChangeEvent event) 
+			{
 				Date date = (Date) event.getValue();
 				String dateString = DateTimeFormat.getMediumDateFormat().format(date);
 				dateLabel.setText(dateString);
 				sendNameToServer();
-				//change the content
+				
+				greetingService.getTimeTableStudentServer(dateString,
+						new AsyncCallback<String>() 
+						{
+							public void onFailure(Throwable caught) 
+							{
+								
+							}
+
+							public void onSuccess(String result) 
+							{
+								if(result==null)
+								{
+									
+								}
+								else{
+									
+								}
+
+							}
+						});
 
 			}
 		});
@@ -131,8 +152,8 @@ public class TimeTable extends VerticalPanel
 	private void sendNameToServer() 
 	{
 		String textToServer = "1231312";
-		hp.add(new Image("img/spinner.gif"));
-		greetingService.greetServer(textToServer,
+		//hp.add(new Image("img/spinner.gif"));
+		greetingService.authenticationServer(textToServer,
 				new AsyncCallback<String>() 
 				{
 			public void onFailure(Throwable caught) 

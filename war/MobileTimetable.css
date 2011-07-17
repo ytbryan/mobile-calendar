@@ -1,11 +1,19 @@
 /** Add css rules here for your application. */
 /** Example rules used by the template application (remove for your app) */
 
-body
-{
-}
 
-.dateLabel
+.ToTheLeft
+{
+	margin-left:220px;	
+}
+.EventButton
+{
+	font-family: Helvetica, sans-serif;
+	font-size: 15px;
+	font-weight: bold;
+	color: #4C566C;
+}
+.DateLabel
 {
 	font-family: Helvetica, sans-serif;
 	font-size: 15px;
@@ -29,6 +37,14 @@ body
 	border:solid 1px;
 	background: -webkit-gradient(linear,0% 40%,0% 70%,from(#F9F9F9),to(#E3E3E3));	
 	width: 40px;
+	height: 30px;
+}
+
+.StarButton
+{
+	border:solid 1px;
+	background: -webkit-gradient(linear,0% 40%,0% 70%,from(#F9F9F9),to(#E3E3E3));	
+	width: 30px;
 	height: 30px;
 }
 
@@ -64,6 +80,11 @@ body
 	font-size: 16px;
 	margin: 9px;
 	padding: 12px 14px 10px 14px;
+	
+	font-family: Helvetica, sans-serif;
+	font-size: 15px;
+	font-weight: bold;
+	color: #4C566C;
 }
 
 .EventDetailsPanel
@@ -106,14 +127,26 @@ body
 
 .TextBox
 {
-	margin: 0px auto;
+	margin-left:10px;
+	font-size:16px;
+}
+
+/*Custom Datepicker*/
+td.datePickerDay
+{
+	font-size:16px;	
 }
 
 .datePickerMonthSelector 
 { 
 	display:none;
 }
-
+td.datePickerDayIsToday
+{
+	font-weight:bold;
+	font-size:18px;
+	background:#FF6827;
+}
 td.datePickerWeekdayLabel
 {
 	background: #ff6827;

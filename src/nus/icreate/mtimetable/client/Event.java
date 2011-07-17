@@ -7,30 +7,39 @@ import com.google.gwt.user.client.ui.Label;
 
 public class Event extends HorizontalPanel
 {
-	Button button = new Button("Lecture");
-	Label label = new Label("MA1101, 11- 12, LT18");//subject, time, location
+	Button button = new Button();
+	Label label = new Label();//subject, time, location
 
-	public Event(Boolean grey)
+	public Event(Boolean grey, ClickListener listener, String type, String description)
 	{
 		button.setHeight("40px");
 		button.setWidth("90px");
-		label.setStyleName("dateLabel");
+		button.setStyleName("EventButton");
+		label.setStyleName("DateLabel");
 		if(grey) this.setStyleName("Grey");
 		else this.setStyleName("DarkGrey");
 		this.add(button);
 		this.add(label);
-	}
-
-	public void addListener(ClickListener listener) 
-	{
 		this.button.addClickListener(listener);
-	}
-	
-	public void setContent(String type,String description)
-	{
 		if(type!=null)
 			button.setText(type);
 		if(description!=null)
 			label.setText(description);		
+	}
+	
+//	public getModule()
+//	{
+//		return "MA1"
+//	}
+	
+	
+
+	public void addListener(ClickListener listener) 
+	{
+	}
+	
+	public void setContent(String type,String description)
+	{
+		
 	}
 }

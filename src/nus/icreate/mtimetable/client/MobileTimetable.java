@@ -45,7 +45,8 @@ public class MobileTimetable implements EntryPoint
 	Label updateDetail1 = new Label("mobile timetable v0.1a released!");
 	Label updateDetail2 = new Label("We are taking part in iCreate 2011");
 	Label updateDetail3 = new Label("//team alpha");
-	Image spinner = new Image("img/spinner.png");
+	Image spinner = new Image("img/spinner.gif");
+
 	HorizontalPanel box;
 	HorizontalPanel box2;
 
@@ -432,17 +433,17 @@ public class MobileTimetable implements EntryPoint
 
 		row.add(img);
 		vp.add(row);
-		HTMLPanel event = new HTMLPanel("Location:");
+		HTMLPanel event = new HTMLPanel("Location: LT4");
 		FocusPanel html = new FocusPanel();
 		html.setStyleName("DetailPanel");
 		html.add(event);
 
-		HTMLPanel event2 = new HTMLPanel("Time:");
+		HTMLPanel event2 = new HTMLPanel("Time: 1000-1200");
 		FocusPanel html2 = new FocusPanel();
 		html2.setStyleName("DetailPanel");
 		html2.add(event2);
 
-		Label event3 = new Label("Module:");
+		Label event3 = new Label("Module:CG3002");
 		FocusPanel html3 = new FocusPanel();
 		html3.setStyleName("DetailPanel");
 		html3.add(event3);

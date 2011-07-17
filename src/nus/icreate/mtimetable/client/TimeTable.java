@@ -10,6 +10,7 @@ import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -26,7 +27,9 @@ public class TimeTable extends VerticalPanel
 	final Label dateLabel = new Label();
 	final DatePicker datePicker = new DatePicker();
 	HorizontalPanel hp = new HorizontalPanel();
-
+	Image smallspinner = new Image("img/spinnersmall.gif");
+	HorizontalPanel hp2;
+	
 	/**
 	 * Create a remote service proxy to talk to the server-side Greeting service.
 	 */
@@ -70,6 +73,7 @@ public class TimeTable extends VerticalPanel
 				Date date = (Date) event.getValue();
 				String dateString = DateTimeFormat.getMediumDateFormat().format(date);
 				dateLabel.setText(dateString);
+				hp2.add(smallspinner);
 				sendNameToServer();
 				
 				greetingService.getTimeTableStudentServer(dateString,
@@ -92,6 +96,13 @@ public class TimeTable extends VerticalPanel
 
 							}
 						});
+				 Timer t = new Timer() {
+				      public void run() {
+							hp2.remove(1);
+				      }
+				    };
+				    // Schedule the timer to run once in 5 seconds.
+				    t.schedule(2000);
 
 			}
 		});
@@ -141,7 +152,10 @@ public class TimeTable extends VerticalPanel
 			}				   
 		});
 
-		hp.add(dateLabel);
+		hp2 = new HorizontalPanel();
+		hp2.add(dateLabel);
+		
+		hp.add(hp2);
 		hp.add(previous);
 		hp.add(next);
 

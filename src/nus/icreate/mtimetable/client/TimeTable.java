@@ -152,8 +152,7 @@ public class TimeTable extends VerticalPanel
 	private void sendNameToServer() 
 	{
 		String textToServer = "1231312";
-		//hp.add(new Image("img/spinner.gif"));
-		greetingService.authenticationServer(textToServer,
+				greetingService.authenticationServer(textToServer,
 				new AsyncCallback<String>() 
 				{
 			public void onFailure(Throwable caught) 

@@ -47,6 +47,7 @@ public class MobileTimetable implements EntryPoint
 	Label updateDetail3 = new Label("//team alpha");
 	Image spinner = new Image("img/spinner.png");
 	HorizontalPanel box;
+	HorizontalPanel box2;
 
 	/*
 	 * The message displayed to the user when the server cannot be reached or
@@ -505,19 +506,21 @@ public class MobileTimetable implements EntryPoint
 		vp.add(row);
 		
 		final Image login = new Image("img/login.png");
-		login.setStyleName("ToTheLeft");
 		login.addMouseListener(new MouseListener() 
 		{
 			@Override
 			public void onMouseDown(Widget sender, int x, int y) 
 			{
 				login.setUrl("img/login_pressed.png");
+				box2.add(new Image("img/spinner.gif"));
+				
 			}
 			
 			@Override
 			public void onMouseUp(Widget sender, int x, int y) 
 			{
 				login.setUrl("img/login.png");
+				box2.remove(1);
 				RootPanel.get().remove(0);
 				showCombinedTimeTable(true);					
 			}
@@ -537,7 +540,9 @@ public class MobileTimetable implements EntryPoint
 				// TODO Auto-generated method stub
 			}
 		});
-		vp.add(login);
+		box2 = new HorizontalPanel();
+		box2.add(login);
+		vp.add(box2);
 		
 		//user1
 		Label userid = new Label("User1 ID:");
@@ -652,24 +657,39 @@ public class MobileTimetable implements EntryPoint
 
 		row.add(img);
 		vp.add(row);
-		HTMLPanel event = new HTMLPanel("3pm, MA1201, LT14");
+		HTMLPanel event = new HTMLPanel("Today, 1500 -1600");
 		FocusPanel html = new FocusPanel();
 		html.setStyleName("DetailPanel");
 		html.add(event);
 
-		HTMLPanel event2 = new HTMLPanel("5pm, EN2244, LT8");
+		HTMLPanel event2 = new HTMLPanel("Today, 1600-1700");
 		FocusPanel html2 = new FocusPanel();
 		html2.setStyleName("DetailPanel");
 		html2.add(event2);
 
-		Label event3 = new Label("6pm, MT1234,LT4");
+		Label event3 = new Label("Tomorrow, 0700 -1000");
 		FocusPanel html3 = new FocusPanel();
 		html3.setStyleName("DetailPanel");
 		html3.add(event3);
+		
+		Label event4 = new Label("2011 July 19, 0700 -1000");
+		FocusPanel html4 = new FocusPanel();
+		html4.setStyleName("DetailPanel");
+		html4.add(event4);
+		
+		Label event5 = new Label("2011 July 19, 1600-1800");
+		FocusPanel html5 = new FocusPanel();
+		html5.setStyleName("DetailPanel");
+		html5.add(event5);
 
+		Label freeslot = new Label("Free Slots");
+		freeslot.setStyleName("DateLabel");
+		vp.add(freeslot);
 		vp.add(html);
 		vp.add(html2);
 		vp.add(html3);
+		vp.add(html4);
+		vp.add(html5);
 
 		ScrollPanel sp = new ScrollPanel();
 		sp.setWidth("320px");

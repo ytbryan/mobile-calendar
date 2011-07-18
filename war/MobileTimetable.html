@@ -34,8 +34,10 @@
     var APIKey = "APILoadTest";
     var APIDomain = "https://ivle.nus.edu.sg/";
     var APIUrl = APIDomain + "api/lapi.svc/";
-    var LoginURL = APIDomain + "api/login/?apikey=APILoadTest&url=http%3A%2F%2Ficreatenus.appspot.com";
-
+    //var LoginURL = APIDomain + "api/login/?apikey=FH3S42OIEnEyN1tEgHs7m&url=http%3A%2F%2Ficreatenus.appspot.com";
+    
+    var LoginURL = APIDomain + "api/login/?apikey=APILoadTest&url=http%3A%2F%2F127.0.0.1:8888/MobileTimetable.html?gwt.codesvr=127.0.0.1:9997";
+ 
     var myModuleInfo = null;
 
     //function to get the query string parameters
@@ -47,7 +49,7 @@
         }
         return r;
     } ();
-
+    
 
     //variable to store the Authentication Token
     var Token = "";

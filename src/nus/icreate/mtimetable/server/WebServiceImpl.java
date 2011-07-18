@@ -28,23 +28,12 @@ public class WebServiceImpl extends RemoteServiceServlet implements
 		WebService {
 	
 	String apikey = "FH3S42OIEnEyN1tEgHs7m";
-// 	String authtoken = "D7819B738AC42B63F98B2D7E83E7235338E9873446AC7A611B8B46B13" +
-// 			"B22344405028D76E26E11B26CF54A0E8DA9400E79C6D7D0667A2353D0C012E0B0F4728" +
-// 			"D21DF0DAECB43304B188C3E8803DF5387517BCE0378C54459829D512793A9E34" +
-// 			"5DDBAAD38EF76C86C09B387CA8360255B5F9F50322513EEFFCBC4DA277DDADF1" +
-// 			"3EA3409FED839D7B3BE99605B18775B747B42287B7A522C69A6A0FEC44FE1D75" +
-// 			"4AD7E22C7F37F83D2B24E7346CEDD16396D6" +
-// 			"127744394C3399A9183D840E1C853278594A06D6F9D7289F40C5450AA7270";
 	String authtoken ="";
-
-	public String getMyOrganizerEventServer(String input) throws IllegalArgumentException {
-		// Verify that the input is valid. 
-		if (!FieldVerifier.isValidName(input)) {
-			// If the input is not valid, throw an IllegalArgumentException back to
-			// the client.
-			throw new IllegalArgumentException(
-					"Name must be at least 4 characters long");
-		}
+	
+	public String authenticationServer(String input) throws IllegalArgumentException {
+		
+		//retrieve the 416-characters token
+		authtoken = input.substring((input.length()-416),input.length());
 
 		String serverInfo = getServletContext().getServerInfo();
 		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
@@ -52,10 +41,74 @@ public class WebServiceImpl extends RemoteServiceServlet implements
 		// Escape data from the client to avoid cross-site script vulnerabilities.
 		input = escapeHtml(input);
 		userAgent = escapeHtml(userAgent);
-				
-//		return "Hello, " + input + "!<br><br>I am running " + serverInfo
-//				+ ".<br><br>It looks like you are using:<br>" + userAgent;
-		return "Hello getMyOrganizerEventServer" +getMyOrganizerEvent();
+		
+		String inputLine = "";
+        String answer ="";
+		 try {
+			
+	            URL yahoo = new URL("https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey=FH3S42OIEnEyN1tEgHs7m&Token=" + authtoken +"&output=json");
+
+	            URLConnection yc = yahoo.openConnection();
+	            BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
+	            while ((inputLine = in.readLine()) != null) 
+	            {
+	            	answer +=inputLine;
+	                System.out.println(inputLine);
+	            }
+	            in.close();
+	            
+	        } 
+		 	catch (MalformedURLException e) 
+	        {
+	            e.printStackTrace();
+	            return null;
+	        } 
+	        catch (IOException e) 
+	        {
+	            e.printStackTrace();
+	            return null;
+	        }
+	        
+		return answer;
+	}
+
+	public String getMyOrganizerEventServer(String input) throws IllegalArgumentException 
+	{
+		authtoken = input.substring((input.length()-416),input.length());
+
+		String serverInfo = getServletContext().getServerInfo();
+		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+
+		// Escape data from the client to avoid cross-site script vulnerabilities.
+		input = escapeHtml(input);
+		userAgent = escapeHtml(userAgent);
+		
+		 String inputLine = "";
+         String answer ="";
+
+	        try {
+	            //new code
+	            URL yahoo = new URL("https://ivle.nus.edu.sg/api/Lapi.svc/MyOrganizer_Events?APIKey="+apikey+"&AuthToken="+authtoken+"&StartDate=19/06/2011&EndDate=30/07/2011&output=json");
+
+	            URLConnection yc = yahoo.openConnection();
+	            BufferedReader in = new BufferedReader(
+	                                    new InputStreamReader(
+	                                    yc.getInputStream()));
+
+	            while ((inputLine = in.readLine()) != null) {
+	            	answer +=inputLine;
+	                System.out.println(inputLine);
+	            }
+
+	            in.close();
+	            
+	        } catch (MalformedURLException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+
+	  return answer;
 	}
 	
 	public String getTimeTableStudentServer(String input) throws IllegalArgumentException {
@@ -115,7 +168,6 @@ public class WebServiceImpl extends RemoteServiceServlet implements
 
         try {
             //new code
-        	
             URL yahoo = new URL("https://ivle.nus.edu.sg/api/Lapi.svc/Timetable_Student?APIKey="+apikey+"&AuthToken="+authtoken+"&AcadYear=2010/2011&Semester=1&output=json");
 
             URLConnection yc = yahoo.openConnection();
@@ -130,7 +182,6 @@ public class WebServiceImpl extends RemoteServiceServlet implements
 
             in.close();
             
-            
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -139,99 +190,6 @@ public class WebServiceImpl extends RemoteServiceServlet implements
 
         return answer;
 	}
-
-	public String authenticationServer(String input) throws IllegalArgumentException {
-		
-		//process the input
-		//http://127.0.0.1:8888/
-		//MobileTimetable.html?gwt.codesvr=127.0.0.1:9997&token=A855F2D8591C5FB6265B98842496
-		//1E9427FA72B30B0893E144FFC23036BF55D1BA7F802648A4928D9AF3DAB201A918FC62E508DAF943BE682A1
-		//21324DF7E1115459F8CCCE8A0916DD4C1B6B2A4C4F1AFC4538D46C9B608CF2659BE1C5F35B03
-		//7C58AE6CA4F57C878D06DE7322FAE47FDDF1C26053F25CDE9DFE5D6EF5823C8E0AAE184DB018E684A237
-		//FBE37A9B3E67AFDB68C9D7E6C63FEB662FCB7D9EDD9E597ACFDC7821E98583
-		//B731687B02E1C3AA051F97660A5C85A29646B8F5EB783EB3027CDB732C9888655572A453A568B15
-		authtoken = input.substring((input.length()-416),input.length());
-		
-		// Verify that the input is valid. 
-		if (!FieldVerifier.isValidName(input)) {
-			// If the input is not valid, throw an IllegalArgumentException back to
-			// the client.
-			throw new IllegalArgumentException(
-					"Name must be at least 4 characters long");
-		}
-
-		String serverInfo = getServletContext().getServerInfo();
-		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
-
-		// Escape data from the client to avoid cross-site script vulnerabilities.
-		input = escapeHtml(input);
-		userAgent = escapeHtml(userAgent);
-		
-		String inputLine = "";
-        String answer ="";
-		 try {
-			
-	            URL yahoo = new URL("https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey=FH3S42OIEnEyN1tEgHs7m&Token=" + authtoken +"&output=json");
-
-	            URLConnection yc = yahoo.openConnection();
-	            BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-	            while ((inputLine = in.readLine()) != null) 
-	            {
-	            	answer +=inputLine;
-	                System.out.println(inputLine);
-	            }
-	            in.close();
-	            
-	        } 
-		 	catch (MalformedURLException e) 
-	        {
-	            e.printStackTrace();
-	            return null;
-	        } 
-	        catch (IOException e) 
-	        {
-	            e.printStackTrace();
-	            return null;
-	        }
-//	        Gson gson = new Gson();
-//	        JsonParser parser = new JsonParser();
-//	        Result array = gson.fromJson(answer,Result.class);
-//	        
-	      
-		return answer;
-	}
-//	public String authentication() 
-//	{
-//	
-//		String inputLine = "";
-//        String answer ="";
-//		 try {
-//			
-//	            URL yahoo = new URL("https://ivle.nus.edu.sg/api/Lapi.svc/Validate?APIKey=FH3S42OIEnEyN1tEgHs7m&Token=D7819B738AC42B63F98B2D7E83E7235338E9873446AC7A611B8B46B13B22344405028D76E26E11B26CF54A0E8DA9400E79C6D7D0667A2353D0C012E0B0F4728D21DF0DAECB43304B188C3E8803DF5387517BCE0378C54459829D512793A9E345DDBAAD38EF76C86C09B387CA8360255B5F9F50322513EEFFCBC4DA277DDADF13EA3409FED839D7B3BE99605B18775B747B42287B7A522C69A6A0FEC44FE1D754AD7E22C7F37F83D2B24E7346CEDD16396D6127744394C3399A9183D840E1C853278594A06D6F9D7289F40C5450AA7270");
-//
-//	            URLConnection yc = yahoo.openConnection();
-//	            BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream()));
-//	            while ((inputLine = in.readLine()) != null) 
-//	            {
-//	            	answer +=inputLine;
-//	                System.out.println(inputLine);
-//	            }
-//	            in.close();
-//	            
-//	        } 
-//		 	catch (MalformedURLException e) 
-//	        {
-//	            e.printStackTrace();
-//	        } 
-//	        catch (IOException e) 
-//	        {
-//	            e.printStackTrace();
-//	        }
-//	        
-//		return answer;
-//	}
-
-	
 
 	public String greetServer(String input) throws IllegalArgumentException 
 	{
@@ -252,7 +210,6 @@ public class WebServiceImpl extends RemoteServiceServlet implements
 		userAgent = escapeHtml(userAgent);
 		
 		return callOut();
-
 	}
 	
 	public String callOut()
